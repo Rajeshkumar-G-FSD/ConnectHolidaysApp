@@ -27,7 +27,9 @@ import {
   ChevronLeft,
   ChevronRight,
   Plus,
-  Eye
+  Eye,
+  Facebook,
+  Instagram
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -283,6 +285,74 @@ const POPULAR_TRIPS: PopularTrip[] = [
   }
 ];
 
+interface Testimonial {
+  id: number;
+  name: string;
+  role: string;
+  avatar: string;
+  rating: number;
+  quote: string;
+}
+
+const TESTIMONIALS: Testimonial[] = [
+  {
+    id: 1,
+    name: "Kaviraj",
+    role: "Traveller",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80",
+    rating: 5,
+    quote: "Our family trip exceeded my expectations with their personalized service and attention to every single detail. An amazing agency!"
+  },
+  {
+    id: 2,
+    name: "Ramya",
+    role: "Traveller",
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80",
+    rating: 5,
+    quote: "I had an incredible experience with TheFunTours. Their knowledgeable staff and well-planned itineraries made my trip unforgettable"
+  },
+  {
+    id: 3,
+    name: "Nithish",
+    role: "Traveller",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&h=150&q=80",
+    rating: 5,
+    quote: "TheFunTours provided excellent value for money and went above and beyond to ensure my satisfaction"
+  },
+  {
+    id: 4,
+    name: "Dinesh",
+    role: "Traveller",
+    avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=150&h=150&q=80",
+    rating: 5,
+    quote: "TheFunTours exceeded my expectations with their personalized service and attention to detail."
+  },
+  {
+    id: 5,
+    name: "Aishwarya",
+    role: "Traveller",
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80",
+    rating: 5,
+    quote: "Our Swiss family vacation was absolutely wonderful! The hotels, transfers, and activities were seamlessly organized."
+  },
+  {
+    id: 6,
+    name: "Rohit",
+    role: "Traveller",
+    avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=150&h=150&q=80",
+    rating: 5,
+    quote: "Premium guides, spectacular boutique stays, and wonderful personalized support. I wouldn't travel with anyone else!"
+  },
+  {
+    id: 7,
+    name: "Meera",
+    role: "Traveller",
+    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&h=150&q=80",
+    rating: 5,
+    quote: "They made sure everything was absolutely pristine. The customer support on WhatsApp was lightning fast and so helpful."
+  }
+];
+
 export default function App() {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [activeModal, setActiveModal] = useState<string | null>(null);
@@ -308,6 +378,27 @@ export default function App() {
   });
   const [bookingSuccessId, setBookingSuccessId] = useState('');
   const [selectedGalleryImage, setSelectedGalleryImage] = useState<string | null>(null);
+  const [activeTestimonialIndex, setActiveTestimonialIndex] = useState(2);
+
+  // Book A Tour Contact Form State
+  const [contactName, setContactName] = useState('');
+  const [contactEmail, setContactEmail] = useState('');
+  const [contactTourType, setContactTourType] = useState('');
+  const [contactMessage, setContactMessage] = useState('');
+  const [contactSubmitted, setContactSubmitted] = useState(false);
+
+  const handleContactSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setContactSubmitted(true);
+    // Auto reset after 5 seconds
+    setTimeout(() => {
+      setContactSubmitted(false);
+      setContactName('');
+      setContactEmail('');
+      setContactTourType('');
+      setContactMessage('');
+    }, 5000);
+  };
 
   // 3D Carousel state & controls
   const [carouselIndex, setCarouselIndex] = useState(0);
@@ -1167,6 +1258,530 @@ export default function App() {
           </div>
         </div>
       </section>
+
+      {/* Testimonials Section */}
+      <section 
+        className="py-20 bg-white relative w-full flex flex-col items-center justify-center border-b border-slate-100 overflow-hidden"
+        id="testimonials"
+      >
+        {/* Decorative Background Icons to simulate travel line doodles */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.05] text-[#1a82e2]">
+          <Globe className="absolute top-12 left-[10%] w-20 h-20 rotate-12" />
+          <Compass className="absolute top-24 right-[12%] w-16 h-16 -rotate-12" />
+          <Umbrella className="absolute bottom-16 left-[15%] w-18 h-18 rotate-45" />
+          <Clock className="absolute bottom-12 right-[8%] w-14 h-14 rotate-12" />
+          <MapPin className="absolute top-1/2 left-[5%] w-16 h-16 -rotate-12" />
+          <Sparkles className="absolute top-20 left-[60%] w-10 h-10" />
+        </div>
+
+        <div className="relative z-10 text-center mb-12 px-6">
+          <span className="block font-script text-[#1a82e2] text-3xl md:text-5xl drop-shadow-sm tracking-wide leading-relaxed">
+            Testimonial
+          </span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-red-600 mt-2 mb-4 font-sans uppercase">
+            Discover Why Clients Love Us
+          </h2>
+          <div className="w-24 h-1 bg-red-500 mx-auto rounded-full mt-4" />
+        </div>
+
+        {/* Carousel Slider */}
+        <div className="relative z-10 w-full overflow-hidden py-10">
+          <motion.div 
+            className="flex gap-4 lg:gap-6 px-4"
+            animate={{ x: (windowWidth / 2) - (activeTestimonialIndex * (windowWidth >= 1024 ? 440 + 24 : 310 + 16)) - ((windowWidth >= 1024 ? 440 : 310) / 2) }}
+            transition={{ type: "spring", stiffness: 120, damping: 20 }}
+            style={{ width: 'max-content' }}
+          >
+            {TESTIMONIALS.map((item, idx) => {
+              const isActive = idx === activeTestimonialIndex;
+              return (
+                <motion.div
+                  key={item.id}
+                  onClick={() => setActiveTestimonialIndex(idx)}
+                  whileHover={{ y: isActive ? -4 : 0 }}
+                  className={`shrink-0 rounded-3xl p-6 md:p-8 relative transition-all duration-500 border cursor-pointer flex flex-col justify-between ${
+                    isActive 
+                      ? 'w-[310px] md:w-[440px] bg-[#f0f9fc] border-sky-100 shadow-xl scale-100 opacity-100' 
+                      : 'w-[290px] md:w-[420px] bg-white border-slate-100 shadow-md scale-95 opacity-50 hover:opacity-80'
+                  }`}
+                  style={{ minHeight: '220px' }}
+                >
+                  {/* Top Row: Avatar & Name & Stars */}
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                      <div className="relative">
+                        <img 
+                          src={item.avatar} 
+                          alt={item.name} 
+                          className="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover border-2 border-white shadow-md"
+                          referrerPolicy="no-referrer"
+                        />
+                        <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-400 border-2 border-white rounded-full" />
+                      </div>
+                      <div className="text-left">
+                        <h4 className="font-extrabold text-red-600 text-sm md:text-base leading-tight">
+                          {item.name}
+                        </h4>
+                        <p className="text-slate-400 text-xs mt-0.5 font-bold">
+                          {item.role}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Star Rating */}
+                    <div className="flex gap-0.5">
+                      {[...Array(item.rating)].map((_, i) => (
+                        <Star key={i} className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Quote Body text */}
+                  <p className="text-slate-600 text-xs md:text-sm leading-relaxed text-left font-medium mt-4 italic mb-4">
+                    “{item.quote}”
+                  </p>
+
+                  {/* Centered Overlapping Quote Badge */}
+                  <div className={`absolute -bottom-5 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full flex items-center justify-center shadow-md transition-all duration-300 z-10 border ${
+                    isActive 
+                      ? 'bg-[#1a82e2] text-white border-sky-400' 
+                      : 'bg-white text-[#1a82e2] border-slate-100 hover:bg-slate-50'
+                  }`}>
+                    <span className="font-serif text-3xl font-bold leading-none select-none -mt-1">”</span>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </div>
+
+        {/* Pagination Dots */}
+        <div className="flex justify-center items-center gap-2 mt-4 z-10">
+          {TESTIMONIALS.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setActiveTestimonialIndex(idx)}
+              className={`rounded-full transition-all duration-300 cursor-pointer w-3.5 h-3.5 ${
+                idx === activeTestimonialIndex 
+                  ? 'bg-[#1a82e2]' 
+                  : 'border-2 border-[#1a82e2]/40 hover:border-[#1a82e2] bg-white'
+              }`}
+              title={`Go to testimonial ${idx + 1}`}
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* Book A Tour Section */}
+      <section 
+        className="py-20 bg-gradient-to-br from-[#f8fdff] to-[#e8f6fa] relative w-full overflow-hidden border-b border-slate-100"
+        id="book-a-tour"
+      >
+        {/* Background decorative path lines / particles */}
+        <div className="absolute inset-0 pointer-events-none opacity-[0.03] text-sky-500">
+          <Globe className="absolute top-8 right-12 w-32 h-32 rotate-45" />
+          <Compass className="absolute bottom-10 left-10 w-24 h-24 -rotate-12" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-6 lg:px-16 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            {/* Left Column: Form */}
+            <div className="lg:col-span-5 text-left bg-white p-8 md:p-10 rounded-[2rem] shadow-xl border border-sky-100/50">
+              <span className="block font-sans text-xs font-extrabold text-blue-600 uppercase tracking-widest mb-2">
+                Plan Your Vacation
+              </span>
+              <h2 className="text-3xl md:text-4xl font-black text-red-600 font-sans uppercase mb-6 tracking-tight">
+                Book A Tour
+              </h2>
+
+              {contactSubmitted ? (
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="bg-emerald-50 border border-emerald-200 text-emerald-800 p-6 rounded-2xl text-center flex flex-col items-center gap-3"
+                >
+                  <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center">
+                    <CheckCircle2 className="w-6 h-6 stroke-[2.5]" />
+                  </div>
+                  <h4 className="font-extrabold text-sm uppercase">Inquiry Received!</h4>
+                  <p className="text-xs text-slate-500 font-medium leading-relaxed">
+                    Thank you, <strong className="text-slate-800">{contactName}</strong>. Our custom travel concierge has received your request for a <strong className="text-slate-800">{contactTourType || 'Custom'} Tour</strong> and will reach out to you within 2 hours.
+                  </p>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleContactSubmit} className="space-y-4">
+                  {/* Name field */}
+                  <div className="relative">
+                    <label className="block text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-1.5 px-1">First Name</label>
+                    <div className="relative">
+                      <Users className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                      <input 
+                        type="text" 
+                        required
+                        value={contactName}
+                        onChange={(e) => setContactName(e.target.value)}
+                        placeholder="Your First Name" 
+                        className="w-full bg-slate-50 border border-slate-200 focus:border-[#1a82e2] focus:bg-white rounded-xl pl-11 pr-4 py-3 text-xs text-slate-800 focus:outline-none font-semibold transition-all"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Mail field */}
+                  <div className="relative">
+                    <label className="block text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-1.5 px-1">Your Mail</label>
+                    <div className="relative">
+                      <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                      <input 
+                        type="email" 
+                        required
+                        value={contactEmail}
+                        onChange={(e) => setContactEmail(e.target.value)}
+                        placeholder="Your Email Address" 
+                        className="w-full bg-slate-50 border border-slate-200 focus:border-[#1a82e2] focus:bg-white rounded-xl pl-11 pr-4 py-3 text-xs text-slate-800 focus:outline-none font-semibold transition-all"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Tour Type field */}
+                  <div className="relative">
+                    <label className="block text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-1.5 px-1">Select Tour Type</label>
+                    <div className="relative">
+                      <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                      <select 
+                        required
+                        value={contactTourType}
+                        onChange={(e) => setContactTourType(e.target.value)}
+                        className="w-full bg-slate-50 border border-slate-200 focus:border-[#1a82e2] focus:bg-white rounded-xl pl-11 pr-10 py-3 text-xs text-slate-800 focus:outline-none font-semibold transition-all appearance-none cursor-pointer"
+                      >
+                        <option value="">Select Tour Type</option>
+                        <option value="International">International Package</option>
+                        <option value="Domestic">Domestic Package</option>
+                        <option value="Honeymoon">Honeymoon Special</option>
+                        <option value="Cruise">Luxury Cruise Voyage</option>
+                        <option value="Custom Bespoke">Bespoke Custom Plan</option>
+                      </select>
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none border-l border-slate-200 pl-3">
+                        <ArrowRight className="w-3.5 h-3.5 rotate-90 text-slate-400" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Message field */}
+                  <div className="relative">
+                    <label className="block text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-1.5 px-1">Your Message</label>
+                    <div className="relative">
+                      <MessageSquare className="absolute left-4 top-3.5 w-4 h-4 text-slate-400" />
+                      <textarea 
+                        rows={3}
+                        required
+                        value={contactMessage}
+                        onChange={(e) => setContactMessage(e.target.value)}
+                        placeholder="Describe your destination dream or general inquiry..." 
+                        className="w-full bg-slate-50 border border-slate-200 focus:border-[#1a82e2] focus:bg-white rounded-xl pl-11 pr-4 py-3 text-xs text-slate-800 focus:outline-none font-semibold transition-all resize-none"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Submit Button */}
+                  <div className="pt-2">
+                    <button 
+                      type="submit"
+                      className="bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs px-8 py-3.5 rounded-full shadow-lg hover:shadow-blue-200 transform hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-2 cursor-pointer w-fit"
+                    >
+                      <span>Send Message</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                </form>
+              )}
+            </div>
+
+            {/* Right Column: High-Fidelity 3D Travel Vector Illustration */}
+            <div className="lg:col-span-7 flex items-center justify-center">
+              <div className="relative w-full max-w-xl h-[400px] md:h-[480px] flex items-center justify-center bg-transparent">
+                
+                {/* 1. Base decorative world map grid */}
+                <div className="absolute inset-0 opacity-[0.08] bg-[radial-gradient(#1a82e2_1.5px,transparent_1.5px)] [background-size:20px_20px] rounded-[3rem]" />
+                
+                {/* 2. Rotating Globe Compass background */}
+                <div className="absolute inset-0 flex items-center justify-center opacity-[0.12] pointer-events-none z-0">
+                  <Globe className="w-80 h-80 text-blue-500 animate-[spin_100s_linear_infinite]" />
+                </div>
+
+                {/* 3. Deep shadow base backing */}
+                <div className="absolute bottom-6 w-4/5 h-10 bg-slate-900/10 blur-2xl rounded-full z-0" />
+
+                {/* 4. Large Suitcase (Teal Green) */}
+                <motion.div 
+                  initial={{ y: 30, rotate: -6 }}
+                  animate={{ y: 0, rotate: -4 }}
+                  transition={{ duration: 1.2, ease: "easeOut" }}
+                  className="absolute bottom-14 right-10 w-[240px] h-[300px] bg-gradient-to-br from-cyan-400 to-teal-500 rounded-[2.5rem] shadow-2xl border-4 border-white flex flex-col justify-between p-6 overflow-hidden z-10"
+                >
+                  {/* Suitcase vertical grooves */}
+                  <div className="absolute inset-0 flex justify-around opacity-20 pointer-events-none px-6 py-8">
+                    <div className="w-1 bg-white h-full rounded-full" />
+                    <div className="w-1 bg-white h-full rounded-full" />
+                    <div className="w-1 bg-white h-full rounded-full" />
+                    <div className="w-1 bg-white h-full rounded-full" />
+                  </div>
+                  {/* Suitcase handle */}
+                  <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-14 border-4 border-slate-300 rounded-t-xl opacity-80" />
+                  
+                  <div className="relative z-10 flex justify-between items-start">
+                    <span className="bg-white/20 backdrop-blur-md rounded-lg px-2.5 py-1 text-white text-[9px] font-bold tracking-wider font-mono uppercase">
+                      The Fun Tours
+                    </span>
+                    <Sparkles className="w-5 h-5 text-yellow-300 animate-pulse" />
+                  </div>
+                  <div className="relative z-10 text-white font-black text-lg tracking-wider">
+                    EXPLORE
+                  </div>
+                </motion.div>
+
+                {/* 5. Medium Suitcase (Deep Blue with straps) */}
+                <motion.div 
+                  initial={{ y: 50, rotate: 12 }}
+                  animate={{ y: 0, rotate: 8 }}
+                  transition={{ duration: 1.4, ease: "easeOut" }}
+                  className="absolute bottom-10 left-8 w-[210px] h-[240px] bg-gradient-to-tr from-blue-600 to-indigo-700 rounded-[2rem] shadow-xl border-4 border-white flex flex-col justify-between p-5 overflow-hidden z-20"
+                >
+                  {/* Darker luggage straps */}
+                  <div className="absolute top-0 bottom-0 left-8 w-4 bg-amber-900/40 border-l border-r border-amber-950/20" />
+                  <div className="absolute top-0 bottom-0 right-8 w-4 bg-amber-900/40 border-l border-r border-amber-950/20" />
+                  
+                  <div className="relative z-10 flex justify-between items-start">
+                    <Compass className="w-6 h-6 text-white opacity-90 animate-spin-slow" />
+                  </div>
+                  <div className="relative z-10 text-white font-bold text-xs tracking-wider opacity-90">
+                    PACK & GO
+                  </div>
+                </motion.div>
+
+                {/* 6. Realistic 3D floating plane card */}
+                <motion.div 
+                  animate={{ 
+                    y: [0, -10, 0],
+                    rotate: [12, 10, 12]
+                  }}
+                  transition={{ 
+                    duration: 5, 
+                    repeat: Infinity, 
+                    ease: "easeInOut" 
+                  }}
+                  className="absolute top-14 left-10 z-30 drop-shadow-[0_15px_15px_rgba(0,0,0,0.2)]"
+                >
+                  <div className="bg-white/95 backdrop-blur-sm px-4.5 py-3.5 rounded-2xl shadow-lg border border-slate-100 flex items-center gap-3">
+                    <div className="w-9 h-9 bg-sky-100 text-sky-600 rounded-xl flex items-center justify-center font-bold">
+                      ✈️
+                    </div>
+                    <div className="text-left">
+                      <span className="block text-[9px] text-slate-400 font-extrabold uppercase tracking-widest leading-none">Status</span>
+                      <span className="block text-xs font-black text-slate-800 mt-1 leading-none">Flight Approved</span>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* 7. Umbrella / Palm accents */}
+                <motion.div 
+                  animate={{ rotate: [-3, 3, -3] }}
+                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute bottom-28 right-24 z-25 text-emerald-500 pointer-events-none drop-shadow-md"
+                >
+                  <Umbrella className="w-20 h-20 -rotate-12 stroke-[1.5]" />
+                </motion.div>
+                
+                {/* Ambient dots/sparkles */}
+                <div className="absolute top-1/3 right-1/4 w-3 h-3 bg-yellow-400 rounded-full animate-ping pointer-events-none" />
+                <div className="absolute bottom-1/3 left-1/3 w-2 h-2 bg-sky-400 rounded-full animate-pulse pointer-events-none" />
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Styled Responsive Footer Section */}
+      <footer 
+        className="bg-[#0b1d33] text-white pt-20 pb-10 border-t border-slate-800"
+        id="footer"
+      >
+        <div className="max-w-7xl mx-auto px-6 lg:px-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 items-start">
+            
+            {/* Column 1: Brand / Description */}
+            <div className="lg:col-span-4 text-left flex flex-col gap-5">
+              <div className="flex items-center gap-2">
+                <span className="text-3xl">✈️</span>
+                <span className="font-sans font-black text-xl tracking-tight text-white uppercase flex items-center">
+                  The <span className="text-red-500 ml-1.5 font-sans">Fun</span> <span className="text-sky-400 ml-1.5 font-sans">Tours</span>
+                </span>
+              </div>
+              <p className="text-slate-400 text-xs md:text-sm leading-relaxed font-medium">
+                Discover the world with our premier travel agency. Explore countless destinations and create unforgettable memories with customized, high-luxury itineraries.
+              </p>
+              
+              {/* Social Icons */}
+              <div className="flex items-center gap-3.5 mt-2">
+                <a 
+                  href="#" 
+                  className="w-9 h-9 rounded-full bg-white/5 hover:bg-blue-600 border border-white/10 hover:border-blue-500 text-slate-300 hover:text-white flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1"
+                  title="Follow us on Facebook"
+                >
+                  <Facebook className="w-4 h-4 fill-current" />
+                </a>
+                <a 
+                  href="#" 
+                  className="w-9 h-9 rounded-full bg-white/5 hover:bg-pink-600 border border-white/10 hover:border-pink-500 text-slate-300 hover:text-white flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1"
+                  title="Follow us on Instagram"
+                >
+                  <Instagram className="w-4 h-4" />
+                </a>
+                <a 
+                  href="https://wa.me/919865051388" 
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-9 h-9 rounded-full bg-white/5 hover:bg-emerald-600 border border-white/10 hover:border-emerald-500 text-slate-300 hover:text-white flex items-center justify-center transition-all duration-300 transform hover:-translate-y-1"
+                  title="Chat on WhatsApp Support"
+                >
+                  <MessageSquare className="w-4 h-4 fill-current" />
+                </a>
+              </div>
+            </div>
+
+            {/* Column 2: Quick Links */}
+            <div className="lg:col-span-2 text-left flex flex-col gap-4">
+              <h4 className="text-sm font-extrabold uppercase tracking-widest text-sky-400 border-l-2 border-red-500 pl-3 leading-none">
+                Quick Links
+              </h4>
+              <nav className="flex flex-col gap-2.5 text-xs text-slate-300 font-bold">
+                <button 
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
+                  className="hover:text-red-500 transition-colors text-left cursor-pointer hover:translate-x-1 duration-200"
+                >
+                  Home
+                </button>
+                <button 
+                  onClick={() => setActiveModal('about')} 
+                  className="hover:text-red-500 transition-colors text-left cursor-pointer hover:translate-x-1 duration-200"
+                >
+                  About
+                </button>
+                <button 
+                  onClick={() => setActiveModal('services')} 
+                  className="hover:text-red-500 transition-colors text-left cursor-pointer hover:translate-x-1 duration-200"
+                >
+                  Service
+                </button>
+                <button 
+                  onClick={() => setActiveModal('destination')} 
+                  className="hover:text-red-500 transition-colors text-left cursor-pointer hover:translate-x-1 duration-200"
+                >
+                  Destination
+                </button>
+                <button 
+                  onClick={() => setActiveModal('contact')} 
+                  className="hover:text-red-500 transition-colors text-left cursor-pointer hover:translate-x-1 duration-200"
+                >
+                  Contact
+                </button>
+              </nav>
+            </div>
+
+            {/* Column 3: Contact & suggested hours */}
+            <div className="lg:col-span-3 text-left flex flex-col gap-4">
+              <h4 className="text-sm font-extrabold uppercase tracking-widest text-sky-400 border-l-2 border-red-500 pl-3 leading-none">
+                Erode Branch
+              </h4>
+              <div className="flex flex-col gap-4 text-xs font-semibold text-slate-300">
+                
+                {/* Physical Location Address */}
+                <div className="flex gap-3 items-start leading-relaxed">
+                  <MapPin className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+                  <span>
+                    Muthuram Complex, 314/L, Brough Rd,<br />
+                    Erode Fort, Erode,<br />
+                    Tamil Nadu 638001
+                  </span>
+                </div>
+
+                {/* Primary phone */}
+                <div className="flex gap-3 items-center">
+                  <Phone className="w-4 h-4 text-[#1a82e2] shrink-0" />
+                  <a href="tel:09865051388" className="hover:text-red-400 transition-colors">
+                    098650 51388
+                  </a>
+                </div>
+
+                {/* Suggested operating hours */}
+                <div className="flex gap-3 items-start pt-1 border-t border-slate-800/60">
+                  <Clock className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                  <div className="flex flex-col gap-1.5">
+                    <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-bold leading-none">Office Hours</span>
+                    <span className="block text-slate-200 text-[11px] leading-tight">
+                      Mon - Sat: 9:30 AM - 8:30 PM<br />
+                      Sunday: 10:00 AM - 6:00 PM
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 text-[10px] bg-emerald-500/10 text-emerald-400 px-2.5 py-0.5 rounded-full border border-emerald-500/20 font-bold w-fit mt-1 leading-none">
+                      <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping" />
+                      Online Concierge: 24/7 Active
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            {/* Column 4: Instagram Post (Interactive Grid) */}
+            <div className="lg:col-span-3 text-left flex flex-col gap-4">
+              <h4 className="text-sm font-extrabold uppercase tracking-widest text-sky-400 border-l-2 border-red-500 pl-3 leading-none">
+                Instagram Post
+              </h4>
+              <div className="grid grid-cols-3 gap-2.5">
+                {[
+                  { id: 1, img: "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=150&h=150&q=80", title: "Tropical Beach Resort" },
+                  { id: 2, img: "https://images.unsplash.com/photo-1540553016722-983e48a2cd10?auto=format&fit=crop&w=150&h=150&q=80", title: "Cruise Pool & Deck" },
+                  { id: 3, img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=150&h=150&q=80", title: "Amalfi Cliffside Village" },
+                  { id: 4, img: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=150&h=150&q=80", title: "Luxury Overwater Oasis" },
+                  { id: 5, img: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=150&h=150&q=80", title: "Scenic Cliff Boating" },
+                  { id: 6, img: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=150&h=150&q=80", title: "Eiffel Tower Paris" }
+                ].map((item) => (
+                  <div 
+                    key={item.id}
+                    onClick={() => setSelectedGalleryImage(item.img)}
+                    className="relative aspect-square rounded-xl overflow-hidden group cursor-pointer border border-white/5 bg-slate-800 shadow-md transform active:scale-95 transition-all hover:shadow-lg"
+                    title={`Zoom view: ${item.title}`}
+                  >
+                    <img 
+                      src={item.img} 
+                      alt={item.title} 
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <span className="text-white text-xs font-bold font-mono">🔍</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
+
+          {/* Subfooter bottom line */}
+          <div className="mt-16 pt-8 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-bold">
+            <div>
+              &copy; {new Date().getFullYear()} The Fun Tours. All Rights Reserved.
+            </div>
+            <div className="flex gap-4">
+              <a href="#" className="hover:text-red-400 transition-colors">Privacy Policy</a>
+              <span>•</span>
+              <a href="#" className="hover:text-red-400 transition-colors">Terms of Service</a>
+            </div>
+          </div>
+        </div>
+      </footer>
 
       {/* 4. Floating WhatsApp Concierge Widget (Bottom Right) */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end" id="whatsapp-concierge">
