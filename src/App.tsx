@@ -491,22 +491,12 @@ export default function App() {
         
         {/* Custom Brand Logo */}
         <a href="#home" className="flex items-center gap-2 group" id="brand-logo">
-          <div className="relative flex items-center justify-center w-10 h-10 bg-gradient-to-tr from-blue-600 to-sky-400 rounded-xl shadow-md transform group-hover:scale-105 transition-all duration-300">
-            <Compass className="w-6 h-6 text-white stroke-[2]" />
-            <span className="absolute -top-1 -right-1 flex h-3 w-3">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-            </span>
-          </div>
-          <div className="flex flex-col">
-            <div className="flex items-baseline">
-              <span className="text-xl font-extrabold tracking-tight text-blue-600">Connect</span>
-              <span className="text-xl font-extrabold tracking-tight text-slate-800 ml-1">Holiday</span>
-            </div>
-            <span className="text-[8px] font-bold tracking-widest text-slate-400 uppercase leading-none mt-0.5">
-              Discover the World, Your Way
-            </span>
-          </div>
+          <img 
+            src="https://i.postimg.cc/NfQWLjfz/Chat-GPT-Image-Jul-15-2026-03-48-22-PM.png" 
+            alt="Connect Holiday" 
+            className="h-10 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-102"
+            referrerPolicy="no-referrer"
+          />
         </a>
 
         {/* Navigation Menu Links */}
@@ -1611,11 +1601,13 @@ export default function App() {
             
             {/* Column 1: Brand / Description */}
             <div className="lg:col-span-4 text-left flex flex-col gap-5">
-              <div className="flex items-center gap-2">
-                <span className="text-3xl">✈️</span>
-                <span className="font-sans font-black text-xl tracking-tight text-white uppercase flex items-center">
-                  <span className="text-sky-400 font-sans">Connect</span> <span className="text-red-500 ml-1.5 font-sans">Holiday</span>
-                </span>
+              <div className="flex items-center">
+                <img 
+                  src="https://i.postimg.cc/NfQWLjfz/Chat-GPT-Image-Jul-15-2026-03-48-22-PM.png" 
+                  alt="Connect Holiday" 
+                  className="h-12 w-auto object-contain bg-white px-3 py-1.5 rounded-xl shadow-md"
+                  referrerPolicy="no-referrer"
+                />
               </div>
               <p className="text-slate-400 text-xs md:text-sm leading-relaxed font-medium">
                 Discover the world with our premier travel agency. Explore countless destinations and create unforgettable memories with customized, high-luxury itineraries.
