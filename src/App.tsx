@@ -23,7 +23,9 @@ import {
   Umbrella, 
   Clock, 
   Sparkles,
-  Star
+  Star,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -107,6 +109,76 @@ const PACKAGES: Package[] = [
   }
 ];
 
+interface CarouselCountry {
+  id: number;
+  name: string;
+  listings: string;
+  image: string;
+}
+
+const CAROUSEL_COUNTRIES: CarouselCountry[] = [
+  {
+    id: 1,
+    name: "Malaysia",
+    listings: "4 Listing",
+    image: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id: 2,
+    name: "Dubai",
+    listings: "3 Listing",
+    image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id: 3,
+    name: "Hong Kong",
+    listings: "5 Listing",
+    image: "https://images.unsplash.com/photo-1506970113724-bc41e013be7b?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id: 4,
+    name: "Singapore",
+    listings: "6 Listing",
+    image: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id: 5,
+    name: "Thailand",
+    listings: "7 Listing",
+    image: "https://images.unsplash.com/photo-1528181304800-2f1258bb9f35?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id: 6,
+    name: "Japan",
+    listings: "8 Listing",
+    image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id: 7,
+    name: "Italy",
+    listings: "6 Listing",
+    image: "https://images.unsplash.com/photo-1433086966358-54859d0ed716?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id: 8,
+    name: "Switzerland",
+    listings: "5 Listing",
+    image: "https://images.unsplash.com/photo-1482867996988-2faec3cbb4f9?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id: 9,
+    name: "Greece",
+    listings: "4 Listing",
+    image: "https://images.unsplash.com/photo-1530841377377-3ff06c0ca713?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id: 10,
+    name: "Maldives",
+    listings: "9 Listing",
+    image: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=800&q=80"
+  }
+];
+
 export default function App() {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [activeModal, setActiveModal] = useState<string | null>(null);
@@ -131,6 +203,26 @@ export default function App() {
     phone: ''
   });
   const [bookingSuccessId, setBookingSuccessId] = useState('');
+
+  // 3D Carousel state & controls
+  const [carouselIndex, setCarouselIndex] = useState(0);
+  const [isCarouselHovered, setIsCarouselHovered] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Auto-slide for 3D Carousel every 2 seconds
+  useEffect(() => {
+    if (isCarouselHovered) return;
+    const timer = setInterval(() => {
+      setCarouselIndex((prev) => (prev + 1) % CAROUSEL_COUNTRIES.length);
+    }, 2000);
+    return () => clearInterval(timer);
+  }, [isCarouselHovered]);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const activeSlide = SLIDES[currentSlideIndex];
@@ -463,6 +555,191 @@ export default function App() {
           </div>
         </div>
       </main>
+
+      {/* 3D Popular Destination Carousel Section */}
+      <section 
+        className="py-20 bg-gradient-to-b from-white to-slate-50 overflow-hidden relative w-full flex flex-col items-center justify-center border-b border-slate-100"
+        id="popular-destinations"
+      >
+        <div className="text-center mb-10 px-6">
+          <span className="block font-script text-sky-500 text-3xl md:text-5xl drop-shadow-sm tracking-wide leading-relaxed">
+            Your Dream Vacation
+          </span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-red-600 mt-2 mb-4 font-sans uppercase">
+            Popular Destination
+          </h2>
+          <div className="w-24 h-1 bg-red-500 mx-auto rounded-full mt-4" />
+        </div>
+
+        {/* 3D Carousel Container */}
+        <div 
+          className="relative w-full flex items-center justify-center h-[520px] md:h-[620px] overflow-hidden select-none"
+          onMouseEnter={() => setIsCarouselHovered(true)}
+          onMouseLeave={() => setIsCarouselHovered(false)}
+        >
+          {/* Manual controls */}
+          <button 
+            onClick={() => setCarouselIndex((prev) => (prev - 1 + CAROUSEL_COUNTRIES.length) % CAROUSEL_COUNTRIES.length)}
+            className="absolute left-4 md:left-8 lg:left-12 z-40 bg-white hover:bg-slate-50 text-slate-800 p-3.5 rounded-full shadow-lg border border-slate-100 hover:scale-110 active:scale-95 transition-all duration-300"
+            title="Previous Destination"
+          >
+            <ChevronLeft className="w-6 h-6 stroke-[2.5]" />
+          </button>
+
+          <button 
+            onClick={() => setCarouselIndex((prev) => (prev + 1) % CAROUSEL_COUNTRIES.length)}
+            className="absolute right-4 md:right-8 lg:right-12 z-40 bg-white hover:bg-slate-50 text-slate-800 p-3.5 rounded-full shadow-lg border border-slate-100 hover:scale-110 active:scale-95 transition-all duration-300"
+            title="Next Destination"
+          >
+            <ChevronRight className="w-6 h-6 stroke-[2.5]" />
+          </button>
+
+          {/* Cards Track */}
+          <div className="relative w-full max-w-7xl h-full flex items-center justify-center">
+            {CAROUSEL_COUNTRIES.map((country, idx) => {
+              let offset = idx - carouselIndex;
+              const N = CAROUSEL_COUNTRIES.length;
+              if (offset < -N / 2) offset += N;
+              if (offset > N / 2) offset -= N;
+
+              const isCenter = offset === 0;
+              const isNearLeft = offset === -1;
+              const isNearRight = offset === 1;
+              const isFarLeft = offset === -2;
+              const isFarRight = offset === 2;
+              const isVisible = Math.abs(offset) <= 2;
+
+              if (!isVisible) return null;
+
+              // Spacing shift values
+              const isMobile = windowWidth < 640;
+              const isTablet = windowWidth >= 640 && windowWidth < 1024;
+
+              let shift = 280;
+              if (isMobile) {
+                shift = 110;
+              } else if (isTablet) {
+                shift = 190;
+              }
+
+              let farShift = 500;
+              if (isMobile) {
+                farShift = 190;
+              } else if (isTablet) {
+                farShift = 330;
+              }
+
+              let xPosition = 0;
+              let scale = 0.55;
+              let zIndex = 0;
+              let opacity = 0;
+              let blurValue = "blur(8px)";
+
+              if (isCenter) {
+                xPosition = 0;
+                scale = 1.05;
+                zIndex = 30;
+                opacity = 1;
+                blurValue = "blur(0px)";
+              } else if (isNearLeft) {
+                xPosition = -shift;
+                scale = isMobile ? 0.8 : 0.85;
+                zIndex = 20;
+                opacity = isMobile ? 0.35 : 0.7;
+                blurValue = isMobile ? "blur(3px)" : "blur(2px)";
+              } else if (isNearRight) {
+                xPosition = shift;
+                scale = isMobile ? 0.8 : 0.85;
+                zIndex = 20;
+                opacity = isMobile ? 0.35 : 0.7;
+                blurValue = isMobile ? "blur(3px)" : "blur(2px)";
+              } else if (isFarLeft) {
+                if (isMobile) return null; // hide far cards on mobile
+                xPosition = -farShift;
+                scale = 0.7;
+                zIndex = 10;
+                opacity = 0.4;
+                blurValue = "blur(4px)";
+              } else if (isFarRight) {
+                if (isMobile) return null; // hide far cards on mobile
+                xPosition = farShift;
+                scale = 0.7;
+                zIndex = 10;
+                opacity = 0.4;
+                blurValue = "blur(4px)";
+              }
+
+              return (
+                <motion.div
+                  key={country.id}
+                  animate={{ 
+                    x: xPosition, 
+                    scale: scale, 
+                    opacity: opacity, 
+                    zIndex: zIndex,
+                  }}
+                  transition={{ 
+                    type: "spring", 
+                    stiffness: 260, 
+                    damping: 26 
+                  }}
+                  onClick={() => {
+                    if (!isCenter) {
+                      setCarouselIndex(idx);
+                    }
+                  }}
+                  style={{
+                    filter: blurValue,
+                    transformOrigin: "center center",
+                    pointerEvents: "auto",
+                  }}
+                  className={`absolute w-[250px] h-[370px] sm:w-[280px] sm:h-[420px] md:w-[320px] md:h-[480px] rounded-3xl overflow-hidden shadow-2xl cursor-pointer select-none`}
+                >
+                  {/* Card Background Image */}
+                  <img 
+                    src={country.image} 
+                    alt={country.name} 
+                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-105 pointer-events-none"
+                    referrerPolicy="no-referrer"
+                  />
+
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent pointer-events-none" />
+
+                  {/* Card Content Footer */}
+                  <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 flex flex-col justify-end text-white text-left pointer-events-auto">
+                    <div className="flex items-end justify-between w-full">
+                      <div className="flex flex-col">
+                        <span className="text-xl md:text-3xl font-extrabold tracking-tight leading-tight">{country.name}</span>
+                        <span className="text-xs md:text-sm text-slate-300 font-semibold mt-1 leading-none">{country.listings}</span>
+                      </div>
+                      
+                      {isCenter && (
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setBookingData(prev => ({ 
+                              ...prev, 
+                              destination: `${country.name} Featured Package` 
+                            }));
+                            setBookingStep(1);
+                            setBookingSuccessId('');
+                            setActiveModal('booking');
+                          }}
+                          className="border border-white/60 hover:border-white hover:bg-white/10 px-4 py-2 rounded-full text-xs md:text-sm font-extrabold text-white flex items-center gap-1.5 backdrop-blur-sm transition-all duration-300 transform active:scale-95 shrink-0"
+                        >
+                          <span>View All</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
       {/* 4. Floating WhatsApp Concierge Widget (Bottom Right) */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end" id="whatsapp-concierge">
