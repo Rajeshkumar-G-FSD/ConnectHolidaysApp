@@ -25,7 +25,9 @@ import {
   Sparkles,
   Star,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Plus,
+  Eye
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -179,6 +181,108 @@ const CAROUSEL_COUNTRIES: CarouselCountry[] = [
   }
 ];
 
+interface Service {
+  id: number;
+  title: string;
+  image: string;
+  bookingPreset: string;
+}
+
+const SERVICES_WE_PROVIDE: Service[] = [
+  {
+    id: 1,
+    title: "Travel packages",
+    image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80",
+    bookingPreset: "Travel packages"
+  },
+  {
+    id: 2,
+    title: "Travel Visa",
+    image: "https://images.unsplash.com/photo-1589758438368-0ad531db3366?auto=format&fit=crop&w=800&q=80",
+    bookingPreset: "Travel Visa"
+  },
+  {
+    id: 3,
+    title: "Passport New",
+    image: "https://images.unsplash.com/photo-1544016768-982d1554f0b9?auto=format&fit=crop&w=800&q=80",
+    bookingPreset: "Passport New"
+  },
+  {
+    id: 4,
+    title: "Passport Renewal",
+    image: "https://images.unsplash.com/photo-1506012787146-f92b2d7d6d96?auto=format&fit=crop&w=800&q=80",
+    bookingPreset: "Passport Renewal"
+  },
+  {
+    id: 5,
+    title: "Hotel & Resort Booking",
+    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80",
+    bookingPreset: "Hotel & Resort Booking"
+  },
+  {
+    id: 6,
+    title: "Flight Ticket",
+    image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80",
+    bookingPreset: "Flight Ticket"
+  },
+  {
+    id: 7,
+    title: "Currency Exchange",
+    image: "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?auto=format&fit=crop&w=800&q=80",
+    bookingPreset: "Currency Exchange"
+  },
+  {
+    id: 8,
+    title: "Group Tours",
+    image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80",
+    bookingPreset: "Group Tours"
+  }
+];
+
+interface PopularTrip {
+  id: number;
+  title: string;
+  image: string;
+  rating: number;
+  duration: string;
+  bookingPreset: string;
+}
+
+const POPULAR_TRIPS: PopularTrip[] = [
+  {
+    id: 1,
+    title: "Honeymoon Tour Package",
+    image: "https://images.unsplash.com/photo-1519181245277-cffeb31da2e3?auto=format&fit=crop&w=800&q=80",
+    rating: 5,
+    duration: "7 Days",
+    bookingPreset: "Honeymoon Tour Package"
+  },
+  {
+    id: 2,
+    title: "Cruise Tour Package",
+    image: "https://images.unsplash.com/photo-1548574505-5e239809ee19?auto=format&fit=crop&w=800&q=80",
+    rating: 5,
+    duration: "7 Days",
+    bookingPreset: "Cruise Tour Package"
+  },
+  {
+    id: 3,
+    title: "Domestic Tour Package",
+    image: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?auto=format&fit=crop&w=800&q=80",
+    rating: 5,
+    duration: "7 Days",
+    bookingPreset: "Domestic Tour Package"
+  },
+  {
+    id: 4,
+    title: "International Tour package",
+    image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80",
+    rating: 5,
+    duration: "7 Days",
+    bookingPreset: "International Tour package"
+  }
+];
+
 export default function App() {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [activeModal, setActiveModal] = useState<string | null>(null);
@@ -203,6 +307,7 @@ export default function App() {
     phone: ''
   });
   const [bookingSuccessId, setBookingSuccessId] = useState('');
+  const [selectedGalleryImage, setSelectedGalleryImage] = useState<string | null>(null);
 
   // 3D Carousel state & controls
   const [carouselIndex, setCarouselIndex] = useState(0);
@@ -741,6 +846,328 @@ export default function App() {
         </div>
       </section>
 
+      {/* Services We Provide Section */}
+      <section 
+        className="py-20 bg-white relative w-full flex flex-col items-center justify-center border-b border-slate-100"
+        id="services-provide"
+      >
+        <div className="text-center mb-12 px-6">
+          <span className="block font-script text-[#1a82e2] text-3xl md:text-5xl drop-shadow-sm tracking-wide leading-relaxed">
+            The Right Solution for Your Needs
+          </span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-red-600 mt-2 mb-4 font-sans uppercase">
+            Services We Provide
+          </h2>
+          <p className="text-slate-500 text-sm md:text-base max-w-2xl mx-auto leading-relaxed mt-2 font-medium">
+            From iconic landmarks to hidden gems, our curated tours promise adventure, comfort, and memories that last a lifetime.
+          </p>
+          <div className="w-24 h-1 bg-red-500 mx-auto rounded-full mt-4" />
+        </div>
+
+        {/* 8 Services Grid */}
+        <div className="w-full max-w-7xl mx-auto px-6 lg:px-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {SERVICES_WE_PROVIDE.map((service) => (
+              <motion.div
+                key={service.id}
+                whileHover={{ y: -8, scale: 1.02 }}
+                onClick={() => {
+                  setBookingData(prev => ({ 
+                    ...prev, 
+                    destination: service.bookingPreset 
+                  }));
+                  setBookingStep(1);
+                  setBookingSuccessId('');
+                  setActiveModal('booking');
+                }}
+                className="bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-xl border border-slate-100 cursor-pointer transition-all duration-300 flex flex-col"
+              >
+                {/* Image Container */}
+                <div className="h-48 overflow-hidden relative">
+                  <img 
+                    src={service.image} 
+                    alt={service.title} 
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-black/5 hover:bg-black/0 transition-colors duration-300" />
+                </div>
+                
+                {/* Title Container */}
+                <div className="bg-[#f0f7fc] py-4 px-6 flex items-center justify-center border-t border-slate-50 flex-1">
+                  <h3 className="font-bold text-slate-800 text-sm sm:text-base text-center tracking-tight">
+                    {service.title}
+                  </h3>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Most Popular Trips Section */}
+      <section 
+        className="py-20 bg-[#e4f3f7] relative w-full flex flex-col items-center justify-center border-b border-slate-100 overflow-hidden"
+        id="popular-trips"
+      >
+        {/* Decorative Background Icons to simulate travel line doodles */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.05] text-[#1a82e2]">
+          <Compass className="absolute top-10 left-[8%] w-16 h-16 rotate-12" />
+          <Globe className="absolute top-20 right-[10%] w-20 h-20 -rotate-12" />
+          <Umbrella className="absolute bottom-12 left-[12%] w-22 h-22 rotate-45" />
+          <MapPin className="absolute bottom-16 right-[15%] w-18 h-18 -rotate-45" />
+          <Clock className="absolute top-1/2 left-[25%] w-14 h-14 rotate-12" />
+          <Sparkles className="absolute top-16 left-[65%] w-10 h-10" />
+          <Users className="absolute bottom-8 right-[30%] w-20 h-20 rotate-6" />
+          <Calendar className="absolute top-1/3 right-[5%] w-16 h-16 -rotate-12" />
+        </div>
+
+        <div className="relative z-10 text-center mb-12 px-6">
+          <span className="block font-script text-[#1a82e2] text-3xl md:text-5xl drop-shadow-sm tracking-wide leading-relaxed">
+            The Ideal Place for Your Journey
+          </span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-red-600 mt-2 mb-4 font-sans uppercase">
+            Most Popular Trips
+          </h2>
+          <p className="text-slate-500 text-sm md:text-base max-w-2xl mx-auto leading-relaxed mt-2 font-medium">
+            Discover the world's most iconic destinations with our curated tours. From ancient wonders to modern marvels, we have the perfect trip for you.
+          </p>
+          <div className="w-24 h-1 bg-red-500 mx-auto rounded-full mt-4" />
+        </div>
+
+        {/* 4 Trips Cards Grid */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {POPULAR_TRIPS.map((trip) => (
+              <motion.div
+                key={trip.id}
+                whileHover={{ y: -8 }}
+                onClick={() => {
+                  setBookingData(prev => ({ 
+                    ...prev, 
+                    destination: trip.bookingPreset 
+                  }));
+                  setBookingStep(1);
+                  setBookingSuccessId('');
+                  setActiveModal('booking');
+                }}
+                className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl border border-slate-100 cursor-pointer transition-all duration-300 flex flex-col group"
+              >
+                {/* Image Container */}
+                <div className="h-56 overflow-hidden relative">
+                  <img 
+                    src={trip.image} 
+                    alt={trip.title} 
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition-colors duration-300" />
+                </div>
+                
+                {/* Info Container */}
+                <div className="p-6 flex flex-col flex-grow text-left">
+                  {/* Rating Stars */}
+                  <div className="flex gap-1 mb-2.5">
+                    {[...Array(trip.rating)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-amber-500 text-amber-500" />
+                    ))}
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="font-bold text-slate-800 text-base md:text-lg tracking-tight mb-6 line-clamp-2 min-h-[3.5rem] group-hover:text-red-600 transition-colors">
+                    {trip.title}
+                  </h3>
+
+                  {/* Bottom Row */}
+                  <div className="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                    {/* Duration */}
+                    <div className="flex items-center gap-1.5 text-slate-500 text-xs font-semibold">
+                      <Clock className="w-4 h-4 text-sky-500" />
+                      <span>{trip.duration}</span>
+                    </div>
+
+                    {/* Button */}
+                    <button className="border border-slate-200 group-hover:border-red-500 group-hover:text-red-500 rounded-full px-4 py-2 text-xs font-extrabold flex items-center gap-1.5 transition-all duration-300 transform active:scale-95 text-slate-700 bg-white shadow-sm shrink-0">
+                      <span>Book Now</span>
+                      <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-red-500 group-hover:translate-x-1 transition-transform duration-300" />
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Recent Gallery Section */}
+      <section 
+        className="py-20 bg-white relative w-full flex flex-col items-center justify-center border-b border-slate-100 overflow-hidden"
+        id="recent-gallery"
+      >
+        <div className="relative z-10 text-center mb-12 px-6">
+          <span className="block font-script text-[#1a82e2] text-3xl md:text-5xl drop-shadow-sm tracking-wide leading-relaxed">
+            Make Your Trip Extraordinary
+          </span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-red-600 mt-2 mb-4 font-sans uppercase">
+            Recent Gallery
+          </h2>
+          <div className="w-24 h-1 bg-red-500 mx-auto rounded-full mt-4" />
+        </div>
+
+        {/* Symmetrical responsive gallery layout matching the screenshot */}
+        <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 lg:px-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-center">
+            
+            {/* Column 1 - Leftmost Single Card */}
+            <div className="col-span-1 flex flex-col justify-center h-full min-h-[280px]">
+              <motion.div
+                whileHover={{ y: -6, scale: 1.02 }}
+                onClick={() => setSelectedGalleryImage("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80")}
+                className="relative group rounded-3xl overflow-hidden shadow-md hover:shadow-xl cursor-pointer transition-all duration-300 border border-slate-100 h-[280px] w-full"
+              >
+                <img 
+                  src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80" 
+                  alt="Tropical Beach" 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  referrerPolicy="no-referrer"
+                />
+                {/* Plus glass zoom overlay */}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-white/95 text-slate-800 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center shadow-lg transform scale-90 group-hover:scale-100">
+                    <Plus className="w-6 h-6 stroke-[2.5]" />
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Column 2 - Stack of Two Cards */}
+            <div className="col-span-1 flex flex-col gap-4 h-full">
+              {/* Top Card */}
+              <motion.div
+                whileHover={{ y: -6, scale: 1.02 }}
+                onClick={() => setSelectedGalleryImage("https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=80")}
+                className="relative group rounded-3xl overflow-hidden shadow-md hover:shadow-xl cursor-pointer transition-all duration-300 border border-slate-100 h-[210px] w-full"
+              >
+                <img 
+                  src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=600&q=80" 
+                  alt="Lake Bridge View" 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-white/95 text-slate-800 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center shadow-lg transform scale-90 group-hover:scale-100">
+                    <Plus className="w-6 h-6 stroke-[2.5]" />
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Bottom Card */}
+              <motion.div
+                whileHover={{ y: -6, scale: 1.02 }}
+                onClick={() => setSelectedGalleryImage("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80")}
+                className="relative group rounded-3xl overflow-hidden shadow-md hover:shadow-xl cursor-pointer transition-all duration-300 border border-slate-100 h-[210px] w-full"
+              >
+                <img 
+                  src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80" 
+                  alt="Scenic Mountains Trail" 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-white/95 text-slate-800 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center shadow-lg transform scale-90 group-hover:scale-100">
+                    <Plus className="w-6 h-6 stroke-[2.5]" />
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Column 3 - Center Tall Single Card */}
+            <div className="col-span-1 flex flex-col justify-center h-full min-h-[440px]">
+              <motion.div
+                whileHover={{ y: -6, scale: 1.02 }}
+                onClick={() => setSelectedGalleryImage("https://images.unsplash.com/photo-1551698618-1ffdfe0700ff?auto=format&fit=crop&w=1200&q=80")}
+                className="relative group rounded-3xl overflow-hidden shadow-md hover:shadow-xl cursor-pointer transition-all duration-300 border border-slate-100 h-[440px] w-full"
+              >
+                <img 
+                  src="https://images.unsplash.com/photo-1551698618-1ffdfe0700ff?auto=format&fit=crop&w=600&q=80" 
+                  alt="Ski Slopes snowy peak" 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-white/95 text-slate-800 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center shadow-lg transform scale-90 group-hover:scale-100">
+                    <Plus className="w-6 h-6 stroke-[2.5]" />
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Column 4 - Stack of Two Cards */}
+            <div className="col-span-1 flex flex-col gap-4 h-full">
+              {/* Top Card */}
+              <motion.div
+                whileHover={{ y: -6, scale: 1.02 }}
+                onClick={() => setSelectedGalleryImage("https://images.unsplash.com/photo-1503152394-c571994fd383?auto=format&fit=crop&w=1200&q=80")}
+                className="relative group rounded-3xl overflow-hidden shadow-md hover:shadow-xl cursor-pointer transition-all duration-300 border border-slate-100 h-[210px] w-full"
+              >
+                <img 
+                  src="https://images.unsplash.com/photo-1503152394-c571994fd383?auto=format&fit=crop&w=600&q=80" 
+                  alt="European Columns Architecture" 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-white/95 text-slate-800 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center shadow-lg transform scale-90 group-hover:scale-100">
+                    <Plus className="w-6 h-6 stroke-[2.5]" />
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Bottom Card */}
+              <motion.div
+                whileHover={{ y: -6, scale: 1.02 }}
+                onClick={() => setSelectedGalleryImage("https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1200&q=80")}
+                className="relative group rounded-3xl overflow-hidden shadow-md hover:shadow-xl cursor-pointer transition-all duration-300 border border-slate-100 h-[210px] w-full"
+              >
+                <img 
+                  src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=600&q=80" 
+                  alt="Yellow dress cliff ocean view" 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-white/95 text-slate-800 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center shadow-lg transform scale-90 group-hover:scale-100">
+                    <Plus className="w-6 h-6 stroke-[2.5]" />
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Column 5 - Rightmost Single Card */}
+            <div className="col-span-1 flex flex-col justify-center h-full min-h-[280px]">
+              <motion.div
+                whileHover={{ y: -6, scale: 1.02 }}
+                onClick={() => setSelectedGalleryImage("https://images.unsplash.com/photo-1548574505-5e239809ee19?auto=format&fit=crop&w=1200&q=80")}
+                className="relative group rounded-3xl overflow-hidden shadow-md hover:shadow-xl cursor-pointer transition-all duration-300 border border-slate-100 h-[280px] w-full"
+              >
+                <img 
+                  src="https://images.unsplash.com/photo-1548574505-5e239809ee19?auto=format&fit=crop&w=600&q=80" 
+                  alt="Luxury Cruise Ship" 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-white/95 text-slate-800 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center shadow-lg transform scale-90 group-hover:scale-100">
+                    <Plus className="w-6 h-6 stroke-[2.5]" />
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* 4. Floating WhatsApp Concierge Widget (Bottom Right) */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end" id="whatsapp-concierge">
         <AnimatePresence>
@@ -1082,6 +1509,34 @@ export default function App() {
                         <option value="Overwater Maldives Sanctuary">Maldives, Indian Ocean ($2,499)</option>
                         <option value="Swiss Alps Luxury Ski Tour">St. Moritz, Switzerland ($3,150)</option>
                         <option value="Amalfi Coastline Serenity">Positano, Italy ($1,890)</option>
+                        <optgroup label="Our Services">
+                          <option value="Travel packages">Travel packages Assistance</option>
+                          <option value="Travel Visa">Travel Visa Assistance</option>
+                          <option value="Passport New">New Passport Processing</option>
+                          <option value="Passport Renewal">Passport Renewal Processing</option>
+                          <option value="Hotel & Resort Booking">Hotel & Resort Booking</option>
+                          <option value="Flight Ticket">Flight Ticket Booking</option>
+                          <option value="Currency Exchange">Currency Exchange Assistance</option>
+                          <option value="Group Tours">Group Tours Package</option>
+                        </optgroup>
+                        <optgroup label="Popular Destinations">
+                          <option value="Malaysia Featured Package">Malaysia Package</option>
+                          <option value="Dubai Featured Package">Dubai Package</option>
+                          <option value="Hong Kong Featured Package">Hong Kong Package</option>
+                          <option value="Singapore Featured Package">Singapore Package</option>
+                          <option value="Thailand Featured Package">Thailand Package</option>
+                          <option value="Japan Featured Package">Japan Package</option>
+                          <option value="Italy Featured Package">Italy Package</option>
+                          <option value="Switzerland Featured Package">Switzerland Package</option>
+                          <option value="Greece Featured Package">Greece Package</option>
+                          <option value="Maldives Featured Package">Maldives Package</option>
+                        </optgroup>
+                        <optgroup label="Popular Trips">
+                          <option value="Honeymoon Tour Package">Honeymoon Tour Package</option>
+                          <option value="Cruise Tour Package">Cruise Tour Package</option>
+                          <option value="Domestic Tour Package">Domestic Tour Package</option>
+                          <option value="International Tour package">International Tour Package</option>
+                        </optgroup>
                         <option value="Custom Bespoke Itinerary">Other Location</option>
                       </select>
                     </div>
@@ -1171,6 +1626,42 @@ export default function App() {
               </form>
             </motion.div>
           </div>
+        )}
+      </AnimatePresence>
+
+      {/* Gallery Lightbox Preview Modal */}
+      <AnimatePresence>
+        {selectedGalleryImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedGalleryImage(null)}
+            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 backdrop-blur-md cursor-pointer"
+          >
+            <button
+              onClick={() => setSelectedGalleryImage(null)}
+              className="absolute top-6 right-6 text-white hover:text-red-500 transition-colors p-3 bg-white/10 hover:bg-white/20 rounded-full cursor-pointer z-50"
+              title="Close Preview"
+            >
+              <X className="w-6 h-6 stroke-[2.5]" />
+            </button>
+
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-5xl max-h-[85vh] rounded-3xl overflow-hidden border border-white/10 shadow-2xl"
+            >
+              <img
+                src={selectedGalleryImage}
+                alt="Recent Gallery Zoom"
+                className="max-w-full max-h-[85vh] object-contain"
+                referrerPolicy="no-referrer"
+              />
+            </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
 
