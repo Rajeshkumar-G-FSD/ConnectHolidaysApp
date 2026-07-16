@@ -1,0 +1,6 @@
+{
+  "name": "Holidays Website Hero",
+  "description": "A high-resolution big screen Hero section for a Holidays website featuring a background video, navigation header, and styled call-to-actions, matching the provided layout and typography specifications.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
