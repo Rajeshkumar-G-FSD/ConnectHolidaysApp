@@ -309,7 +309,7 @@ const TESTIMONIALS: Testimonial[] = [
     role: "Traveller",
     avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80",
     rating: 5,
-    quote: "I had an incredible experience with TheFunTours. Their knowledgeable staff and well-planned itineraries made my trip unforgettable"
+    quote: "I had an incredible experience with Connect Holiday. Their knowledgeable staff and well-planned itineraries made my trip unforgettable"
   },
   {
     id: 3,
@@ -317,7 +317,7 @@ const TESTIMONIALS: Testimonial[] = [
     role: "Traveller",
     avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&h=150&q=80",
     rating: 5,
-    quote: "TheFunTours provided excellent value for money and went above and beyond to ensure my satisfaction"
+    quote: "Connect Holiday provided excellent value for money and went above and beyond to ensure my satisfaction"
   },
   {
     id: 4,
@@ -325,7 +325,7 @@ const TESTIMONIALS: Testimonial[] = [
     role: "Traveller",
     avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=150&h=150&q=80",
     rating: 5,
-    quote: "TheFunTours exceeded my expectations with their personalized service and attention to detail."
+    quote: "Connect Holiday exceeded my expectations with their personalized service and attention to detail."
   },
   {
     id: 5,
@@ -362,7 +362,7 @@ export default function App() {
   
   // Custom interactive state for WhatsApp mini-chat
   const [chatMessages, setChatMessages] = useState<Array<{ sender: 'bot' | 'user'; text: string; time: string }>>([
-    { sender: 'bot', text: "Hello! Welcome to The Fun Tours 🌍. I am your virtual travel concierge. How can I help you plan your dream holiday today?", time: "Just now" }
+    { sender: 'bot', text: "Hello! Welcome to Connect Holiday 🌍. I am your virtual travel concierge. How can I help you plan your dream holiday today?", time: "Just now" }
   ]);
   const [chatInput, setChatInput] = useState('');
 
@@ -500,9 +500,8 @@ export default function App() {
           </div>
           <div className="flex flex-col">
             <div className="flex items-baseline">
-              <span className="text-xl font-extrabold tracking-tight text-slate-800">The</span>
-              <span className="text-xl font-extrabold tracking-tight text-blue-600 ml-1">Fun</span>
-              <span className="text-xl font-extrabold tracking-tight text-slate-800 ml-1">Tours</span>
+              <span className="text-xl font-extrabold tracking-tight text-blue-600">Connect</span>
+              <span className="text-xl font-extrabold tracking-tight text-slate-800 ml-1">Holiday</span>
             </div>
             <span className="text-[8px] font-bold tracking-widest text-slate-400 uppercase leading-none mt-0.5">
               Discover the World, Your Way
@@ -1531,7 +1530,7 @@ export default function App() {
                   
                   <div className="relative z-10 flex justify-between items-start">
                     <span className="bg-white/20 backdrop-blur-md rounded-lg px-2.5 py-1 text-white text-[9px] font-bold tracking-wider font-mono uppercase">
-                      The Fun Tours
+                      Connect Holiday
                     </span>
                     <Sparkles className="w-5 h-5 text-yellow-300 animate-pulse" />
                   </div>
@@ -1615,7 +1614,7 @@ export default function App() {
               <div className="flex items-center gap-2">
                 <span className="text-3xl">✈️</span>
                 <span className="font-sans font-black text-xl tracking-tight text-white uppercase flex items-center">
-                  The <span className="text-red-500 ml-1.5 font-sans">Fun</span> <span className="text-sky-400 ml-1.5 font-sans">Tours</span>
+                  <span className="text-sky-400 font-sans">Connect</span> <span className="text-red-500 ml-1.5 font-sans">Holiday</span>
                 </span>
               </div>
               <p className="text-slate-400 text-xs md:text-sm leading-relaxed font-medium">
@@ -1772,7 +1771,7 @@ export default function App() {
           {/* Subfooter bottom line */}
           <div className="mt-16 pt-8 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-bold">
             <div>
-              &copy; {new Date().getFullYear()} The Fun Tours. All Rights Reserved.
+              &copy; {new Date().getFullYear()} Connect Holiday. All Rights Reserved.
             </div>
             <div className="flex gap-4">
               <a href="#" className="hover:text-red-400 transition-colors">Privacy Policy</a>
@@ -1805,7 +1804,7 @@ export default function App() {
                     <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-400 border-2 border-white rounded-full" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-sm leading-tight">Sarah from The Fun Tours</h4>
+                    <h4 className="font-bold text-sm leading-tight">Sarah from Connect Holiday</h4>
                     <p className="text-[11px] text-emerald-100 flex items-center gap-1 mt-0.5">
                       <span className="inline-block w-1.5 h-1.5 bg-emerald-300 rounded-full animate-ping" />
                       Online • Custom Vacation Expert
@@ -1903,7 +1902,7 @@ export default function App() {
                 <button onClick={() => setActiveModal(null)} className="absolute top-4 right-4 bg-black/30 hover:bg-black/50 p-2 rounded-full text-white backdrop-blur-sm transition-colors cursor-pointer"><X className="w-5 h-5" /></button>
                 <div className="absolute bottom-4 left-6 text-white">
                   <span className="bg-white/20 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm uppercase tracking-wider">Our Story</span>
-                  <h3 className="text-2xl font-extrabold tracking-tight mt-2">The Fun Tours</h3>
+                  <h3 className="text-2xl font-extrabold tracking-tight mt-2">Connect Holiday</h3>
                 </div>
               </div>
               <div className="p-8">
